@@ -135,13 +135,15 @@ app.delete('/usuario/:id', function(req, res) {
     Usuario.findByIdAndUpdate(id, cambiaEstado, {new: true}, (err, usuarioBorrado) => {
         // Evaluar si existe error
         if(err){
-            return res.status(400).json({
+            // Retornar error 500 error del servidor
+            return res.status(500).json({
                 ok: false,
                 err,
             });
         }
         // Evaluar si no se ha eliminado un usuario
         if(!usuarioBorrado){
+            // Si no existe usuario mandar estado 400 bad request
             return res.status(400).json({
                 ok: false,
                 err: {
