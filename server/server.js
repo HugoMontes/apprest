@@ -19,8 +19,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Middleware para parsear datos a formato application/json
 app.use(bodyParser.json());
 
-// Importar y usar las rutas de usuario
-app.use(require('./routes/usuario'));
+// Importar el archivo de rutas
+app.use(require('./routes/routes'));
 
 // Indicar la cadena de conexion
 // Indicar el puerto por defecto de mongo 27017
