@@ -47,7 +47,7 @@ app.post('/login', (req, res) => {
         let token = jwt.sign({
             // Ingresar los datos del payload
             usuario: usuarioDB
-        }, process.env.CADUCIDAD_TOKEN, { expiresIn: process.env.SEED });
+        }, process.env.SEED, { expiresIn: process.env.CADUCIDAD_TOKEN });
         // Si todo es correcto enviar el usuario
         return res.json({
             ok: true,
