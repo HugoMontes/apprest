@@ -13,7 +13,7 @@ const app = express();
 const Usuario = require('../models/usuarios');
 
 // Importar la funcion del middleware
-const { verificaToken } = require('../middlewares/autenticacion');
+const { verificaToken, verificaAdminRole } = require('../middlewares/autenticacion');
 
 // app.get('RUTA', MIDDLEWARE, CALLBACK)
 // Ingresar como segundo argumento un middleware
@@ -60,7 +60,8 @@ app.get('/usuario', verificaToken, (req, res) => {
         });
 });
 
-app.post('/usuario', verificaToken, (req, res) => {
+// Enviar dos middlewares
+app.post('/usuario', [verificaToken, verificaAdminRole], (req, res) => {
     // Obtener el payload (cuerpo de la peticion)
     let body = req.body;
     // Instanciar un objeto del modelo pasandole
@@ -93,7 +94,7 @@ app.post('/usuario', verificaToken, (req, res) => {
     });
 });
 
-app.put('/usuario/:id', verificaToken, (req, res) => {
+app.put('/usuario/:id', [verificaToken, verificaAdminRole], (req, res) => {
     // Obtener el id del registro
     let id = req.params.id;
     // Obtener del body unicamente los valores a modificar
@@ -121,7 +122,7 @@ app.put('/usuario/:id', verificaToken, (req, res) => {
 });
 
 // Eliminar registro
-app.delete('/usuario/:id', verificaToken, function(req, res) {
+app.delete('/usuario/:id', [verificaToken, verificaAdminRole], function(req, res) {
     // Obtener el id del registro a eliminar    
     let id = req.params.id;
 
