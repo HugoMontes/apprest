@@ -12,7 +12,12 @@ const app = express();
 // Importar el modelo de usuario
 const Usuario = require('../models/usuarios');
 
-app.get('/usuario', (req, res) => {
+// Importar la funcion del middleware
+const { verificaToken } = require('../middlewares/autenticacion');
+
+// app.get('RUTA', MIDDLEWARE, CALLBACK)
+// Ingresar como segundo argumento un middleware
+app.get('/usuario', verificaToken, (req, res) => {
     // Parametros opcionales
 
     // Obtener desde que registro se va mostrar
@@ -55,7 +60,7 @@ app.get('/usuario', (req, res) => {
         });
 });
 
-app.post('/usuario', (req, res) => {
+app.post('/usuario', verificaToken, (req, res) => {
     // Obtener el payload (cuerpo de la peticion)
     let body = req.body;
     // Instanciar un objeto del modelo pasandole
@@ -88,7 +93,7 @@ app.post('/usuario', (req, res) => {
     });
 });
 
-app.put('/usuario/:id', (req, res) => {
+app.put('/usuario/:id', verificaToken, (req, res) => {
     // Obtener el id del registro
     let id = req.params.id;
     // Obtener del body unicamente los valores a modificar
@@ -116,7 +121,7 @@ app.put('/usuario/:id', (req, res) => {
 });
 
 // Eliminar registro
-app.delete('/usuario/:id', function(req, res) {
+app.delete('/usuario/:id', verificaToken, function(req, res) {
     // Obtener el id del registro a eliminar    
     let id = req.params.id;
 
