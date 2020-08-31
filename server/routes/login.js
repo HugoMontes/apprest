@@ -1,6 +1,8 @@
 // Importar los modulos
 const express = require('express');
 const bcrypt = require('bcrypt');
+// Declarar una constante jwt
+const jwt = require('jsonwebtoken');
 // Importarel modelo
 const Usuario = require('../models/usuarios');
 const { rest } = require('underscore');
@@ -40,11 +42,17 @@ app.post('/login', (req, res) => {
                 }
             });
         }
+        // Crear el token el cual contiene un
+        // seed = semilla = llave y tiempo de expiracion de una hora
+        let token = jwt.sign({
+            // Ingresar los datos del payload
+            usuario: usuarioDB
+        }, process.env.CADUCIDAD_TOKEN, { expiresIn: process.env.SEED });
         // Si todo es correcto enviar el usuario
         return res.json({
             ok: true,
             usuario: usuarioDB,
-            token: '123'
+            token
         });
     });
 });

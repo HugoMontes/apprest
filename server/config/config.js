@@ -19,3 +19,14 @@ if(process.env.NODE_ENV === 'dev'){
     urldb = 'CADENA_CONEXION_DB_PRODUCCION';
 }
 process.env.URL_DB = urldb;
+
+// ==================================
+// VENCIMIENTO DEL TOKEN
+// ==================================
+// 60 min * 60 seg = 1 hora
+process.env.CADUCIDAD_TOKEN = 60 * 60;
+
+// ==================================
+// SEED DE ATUTENTICACION
+// ==================================
+process.env.SEED = process.env.SEED || 'secret';
